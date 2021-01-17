@@ -1,12 +1,15 @@
 namespace WebUi.Test
 {
-    using System.Net;
+    using System.IO;
+    using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
+    using System.Xml.Linq;
+    using Helpers;
     using Microsoft.AspNetCore.Mvc.Testing;
     using NUnit.Framework;
 
-    public class WebUiTests
+    public class DropdownListOfAvailableLocationsTest
     {
         HttpClient client;
         WebApplicationFactory<Startup> factory;
@@ -14,16 +17,21 @@ namespace WebUi.Test
         [SetUp]
         public void Setup()
         {
-            factory = new WebApplicationFactory<Startup>();
+            factory = new WebUiApplicationFactory();
             client = factory.CreateClient();
         }
 
         [Test]
-        public async Task CanHitHomepage()
+        public async Task Test()
         {
             HttpResponseMessage response = await client.GetAsync("");
 
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Stream responseStream = await response.Content.ReadAsStreamAsync();
+            XDocument htmlDocument = XDocument.Load(responseStream);
+
+            XElement dropdown = htmlDocument.Descendants("select").SingleOrDefault();
+
+            Assert.IsNotNull(dropdown, "Location dropdown not found.");
         }
 
         [TearDown]
