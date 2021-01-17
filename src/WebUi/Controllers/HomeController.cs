@@ -1,9 +1,9 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using WebUi.Models;
-
-namespace WebUi.Controllers
+﻿namespace WebUi.Controllers
 {
+    using System.Diagnostics;
+    using Microsoft.AspNetCore.Mvc;
+    using Models;
+
     [Route("")]
     public class HomeController : Controller
     {
