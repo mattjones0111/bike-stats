@@ -51,9 +51,16 @@ namespace WebUi.Test
                 .Descendants("option")
                 .Select(x => x.Value);
 
-            string[] expected = {"Amsterdam", "Berlin", "Copenhagen", "Brussels"};
+            string[] expected =
+            {
+                "Amsterdam", "Berlin", "Copenhagen",
+                "Brussels", "Milan", "Paris", "London"
+            };
 
-            CollectionAssert.AreEquivalent(expected, actual);
+            CollectionAssert.AreEquivalent(
+                expected,
+                actual,
+                "Location dropdown does not contain expected cities.");
         }
 
         [TearDown]

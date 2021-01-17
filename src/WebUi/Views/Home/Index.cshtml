@@ -4,16 +4,14 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    
-    
+
     @using (Html.BeginForm(FormMethod.Get))
     {
-        <select id="location" name="location">
-            <option>Amsterdam</option>
-            <option>Berlin</option>
-            <option>Copenhagen</option>
-            <option>Brussels</option>
-        </select>
+        @Html.DropDownList(
+            "location",
+            ViewBag.ServiceLocations as IEnumerable<SelectListItem>)
+
+        <input type="submit" value="Go" />
     }
 
 </div>

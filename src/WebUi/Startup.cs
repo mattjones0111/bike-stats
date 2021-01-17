@@ -1,10 +1,12 @@
 namespace WebUi
 {
+    using Adapters;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Ports;
 
     public class Startup
     {
@@ -18,6 +20,8 @@ namespace WebUi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddTransient<IProvideServiceLocations, CurrentServiceLocationsProvider>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
