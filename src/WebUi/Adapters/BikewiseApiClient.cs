@@ -1,7 +1,7 @@
 ﻿namespace WebUi.Adapters
 {
+    using System;
     using System.Linq;
-    using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
     using Configuration;
@@ -22,8 +22,19 @@
 
         public async Task<int> GetTheftCountAsync(string locationName)
         {
-            string query = "?page=1&" +
-                           $"proximity={locationName}" +
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+
+            if (string.IsNullOrWhiteSpace(locationName))
+            {
+                throw new ArgumentException(
+                    $"{nameof(locationName)} cannot be an empty or whitespace string.");
+            }
+
+            string query = "?page=1" +
+                           $"&proximity={locationName}" +
                            "&incident_type=theft";
 
             HttpResponseMessage response = await httpClient.GetAsync(query);
