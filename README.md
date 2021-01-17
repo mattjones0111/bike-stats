@@ -18,7 +18,7 @@ selected cities/areas.
 
 ## Run
 
-```dotnet run```
+```dotnet run --project '.\src\WebUi\WebUi.csproj'```
 
 ## Contributing
 
