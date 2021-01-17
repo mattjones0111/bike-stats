@@ -1,6 +1,7 @@
 ﻿namespace WebUi.Adapters
 {
     using System.Linq;
+    using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
     using Configuration;
@@ -10,11 +11,11 @@
     ///    A provider that uses the Bikewise API to retrieve counts of
     ///    theft incidents.
     /// </summary>
-    public sealed class BikewiseApiTheftCountProvider : IGetTheftCounts
+    public sealed class BikewiseApiClient : IGetTheftCounts
     {
         readonly HttpClient httpClient;
 
-        public BikewiseApiTheftCountProvider(IHttpClientFactory httpClientFactory)
+        public BikewiseApiClient(IHttpClientFactory httpClientFactory)
         {
             httpClient = httpClientFactory.CreateClient(HttpClientNames.Bikewise);
         }
@@ -32,6 +33,14 @@
                 throw new BikewiseApiException(
                     query,
                     "Bikewise API returned a non-success status code.",
+                    response.StatusCode);
+            }
+
+            if (!response.Headers.Contains("Total"))
+            {
+                throw new BikewiseApiException(
+                    query,
+                    "'Total' header not found.",
                     response.StatusCode);
             }
 

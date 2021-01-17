@@ -16,13 +16,13 @@
                 throw new ArgumentException($"{nameof(incidentsUrl)} is not set.");
             }
 
-            services.AddTransient<IGetTheftCounts, BikewiseApiTheftCountProvider>();
+            services.AddTransient<IGetTheftCounts, BikewiseApiClient>();
 
             services.AddHttpClient(
                 HttpClientNames.Bikewise,
                 client =>
                 {
-                    client.BaseAddress = new Uri("https://bikewise.org/api/v2/incidents");
+                    client.BaseAddress = new Uri(incidentsUrl);
                 });
 
             return services;
