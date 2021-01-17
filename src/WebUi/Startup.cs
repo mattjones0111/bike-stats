@@ -1,6 +1,7 @@
 namespace WebUi
 {
     using Adapters;
+    using Configuration;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -21,8 +22,9 @@ namespace WebUi
         {
             services.AddControllersWithViews();
 
-            services.AddTransient<IProvideServiceLocations, CurrentServiceLocationsProvider>();
-            services.AddTransient<IGetTheftCounts, NopTheftCountProvider>();
+            services.AddTransient<IProvideServiceLocations, DefaultServiceLocationProvider>();
+
+            services.AddBikewiseApi(Configuration["BikewiseApi:IncidentsUri"]);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

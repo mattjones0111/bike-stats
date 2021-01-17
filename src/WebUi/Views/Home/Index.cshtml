@@ -5,6 +5,9 @@
 
 <div>
     <h1 class="display-4">Welcome</h1>
+    
+    <p>Use this page to get the number of thefts reported for the given city.
+        Select a city and press Go to query.</p>
 
     @using (Html.BeginForm(FormMethod.Get))
     {
@@ -19,7 +22,7 @@
     {
         <div>
             There were <span id="result">@Model.TheftCount</span> incidents 
-            of theft reported in this location.
+            of theft reported in @Model.SelectedLocation.
         </div>
     }
 

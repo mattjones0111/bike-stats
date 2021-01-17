@@ -7,7 +7,7 @@
     ///    A provider that returns a fixed list of current and future
     ///    service locations.
     /// </summary>
-    public sealed class CurrentServiceLocationsProvider : IProvideServiceLocations
+    public sealed class DefaultServiceLocationProvider : IProvideServiceLocations
     {
         public Task<string[]> GetServiceLocationsAsync()
         {

@@ -7,13 +7,12 @@ namespace WebUi.Test
     using System.Threading.Tasks;
     using System.Xml.Linq;
     using Helpers;
-    using Microsoft.AspNetCore.Mvc.Testing;
     using NUnit.Framework;
 
     public class DropdownListOfAvailableLocationsTest
     {
         HttpClient client;
-        WebApplicationFactory<Startup> factory;
+        WebUiApplicationFactory factory;
 
         [SetUp]
         public void Setup()

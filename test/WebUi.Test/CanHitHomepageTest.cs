@@ -4,13 +4,12 @@ namespace WebUi.Test
     using System.Net.Http;
     using System.Threading.Tasks;
     using Helpers;
-    using Microsoft.AspNetCore.Mvc.Testing;
     using NUnit.Framework;
 
     public class CanHitHomepageTest
     {
         HttpClient client;
-        WebApplicationFactory<Startup> factory;
+        WebUiApplicationFactory factory;
 
         [SetUp]
         public void Setup()
