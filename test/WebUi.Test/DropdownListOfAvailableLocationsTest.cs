@@ -25,10 +25,7 @@ namespace WebUi.Test
         [Test]
         public async Task DropdownExists()
         {
-            HttpResponseMessage response = await client.GetAsync("");
-
-            Stream responseStream = await response.Content.ReadAsStreamAsync();
-            XDocument htmlDocument = XDocument.Load(responseStream);
+            XDocument htmlDocument = await LoadHtml("");
 
             XElement dropdown = htmlDocument
                 .Descendants("select")
@@ -40,10 +37,7 @@ namespace WebUi.Test
         [Test]
         public async Task DropdownContainsLocations()
         {
-            HttpResponseMessage response = await client.GetAsync("");
-
-            Stream responseStream = await response.Content.ReadAsStreamAsync();
-            XDocument htmlDocument = XDocument.Load(responseStream);
+            XDocument htmlDocument = await LoadHtml("");
 
             IEnumerable<string> actual = htmlDocument
                 .Descendants("select")
@@ -61,6 +55,14 @@ namespace WebUi.Test
                 expected,
                 actual,
                 "Location dropdown does not contain expected cities.");
+        }
+
+        async Task<XDocument> LoadHtml(string url)
+        {
+            HttpResponseMessage response = await client.GetAsync(url);
+
+            Stream responseStream = await response.Content.ReadAsStreamAsync();
+            return XDocument.Load(responseStream);
         }
 
         [TearDown]

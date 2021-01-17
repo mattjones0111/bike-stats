@@ -20,7 +20,7 @@ namespace WebUi.Test
         }
 
         [Test]
-        public async Task Test()
+        public async Task HomepageExists()
         {
             HttpResponseMessage response = await client.GetAsync("");
 
