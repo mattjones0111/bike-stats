@@ -4,24 +4,39 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Models;
     using Ports;
 
     [Route("")]
     public class HomeController : Controller
     {
         readonly IProvideServiceLocations serviceLocationsProvider;
+        readonly IGetTheftCounts theftCountProvider;
 
-        public HomeController(IProvideServiceLocations serviceLocationsProvider)
+        public HomeController(
+            IProvideServiceLocations serviceLocationsProvider,
+            IGetTheftCounts theftCountProvider)
         {
             this.serviceLocationsProvider = serviceLocationsProvider;
+            this.theftCountProvider = theftCountProvider;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] string location = null)
         {
             await BindServiceLocations();
 
-            return View();
+            IndexPageModel model = new IndexPageModel();
+
+            if (string.IsNullOrWhiteSpace(location))
+            {
+                return View(model);
+            }
+
+            model.SelectedLocation = location;
+            model.TheftCount = await theftCountProvider.GetTheftCountAsync(location);
+
+            return View(model);
         }
 
         async Task BindServiceLocations()

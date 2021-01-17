@@ -1,8 +1,9 @@
-﻿@{
+﻿@model IndexPageModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div>
     <h1 class="display-4">Welcome</h1>
 
     @using (Html.BeginForm(FormMethod.Get))
@@ -12,6 +13,14 @@
             ViewBag.ServiceLocations as IEnumerable<SelectListItem>)
 
         <input type="submit" value="Go" />
+    }
+    
+    @if (Model != null && Model.TheftCount.HasValue)
+    {
+        <div>
+            There were <span id="result">@Model.TheftCount</span> incidents 
+            of theft reported in this location.
+        </div>
     }
 
 </div>

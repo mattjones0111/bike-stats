@@ -22,6 +22,7 @@ namespace WebUi
             services.AddControllersWithViews();
 
             services.AddTransient<IProvideServiceLocations, CurrentServiceLocationsProvider>();
+            services.AddTransient<IGetTheftCounts, NopTheftCountProvider>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

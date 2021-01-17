@@ -3,6 +3,10 @@
     using System.Threading.Tasks;
     using Ports;
 
+    /// <summary>
+    ///    A provider that returns a fixed list of current and future
+    ///    service locations.
+    /// </summary>
     public sealed class CurrentServiceLocationsProvider : IProvideServiceLocations
     {
         public Task<string[]> GetServiceLocationsAsync()
