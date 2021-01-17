@@ -1,5 +1,6 @@
 namespace WebUi.Test
 {
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Net.Http;
@@ -22,16 +23,37 @@ namespace WebUi.Test
         }
 
         [Test]
-        public async Task Test()
+        public async Task DropdownExists()
         {
             HttpResponseMessage response = await client.GetAsync("");
 
             Stream responseStream = await response.Content.ReadAsStreamAsync();
             XDocument htmlDocument = XDocument.Load(responseStream);
 
-            XElement dropdown = htmlDocument.Descendants("select").SingleOrDefault();
+            XElement dropdown = htmlDocument
+                .Descendants("select")
+                .SingleOrDefault();
 
             Assert.IsNotNull(dropdown, "Location dropdown not found.");
+        }
+
+        [Test]
+        public async Task DropdownContainsLocations()
+        {
+            HttpResponseMessage response = await client.GetAsync("");
+
+            Stream responseStream = await response.Content.ReadAsStreamAsync();
+            XDocument htmlDocument = XDocument.Load(responseStream);
+
+            IEnumerable<string> actual = htmlDocument
+                .Descendants("select")
+                .Single()
+                .Descendants("option")
+                .Select(x => x.Value);
+
+            string[] expected = {"Amsterdam", "Berlin", "Copenhagen", "Brussels"};
+
+            CollectionAssert.AreEquivalent(expected, actual);
         }
 
         [TearDown]
